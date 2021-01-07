@@ -76,7 +76,7 @@ opened:    push    rd                  ; save file descriptor
            lbnf    success             ; jump if read was good
            sep     scall               ; indicate error
            dw      f_inmsg
-           db      'Error writing to file',10,13,0
+           db      'Error reading kernel file',10,13,0
            pop     rd
            lbr     o_wrmboot           ; return to OS
 success:   pop     rd                  ; recover file descriptor
@@ -103,7 +103,7 @@ bootrd:    glo     r7                  ; save R7
            plo     r7
            inc     r7                  ; point to next sector
            glo     r7                  ; get count
-           smi     15                  ; was last sector (16) read?
+           smi     17                  ; was last sector (16) written?
            lbnz    bootrd              ; jump if not
 
            sep     scall               ; display completion message
