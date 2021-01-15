@@ -48,7 +48,7 @@ loop1:     lda     rf                  ; look for first less <= space
            ldn     rf                  ; get byte from argument
            lbnz    good                ; jump if filename given
            sep     scall               ; otherwise display usage message
-           dw      f_inmsg
+           dw      o_inmsg
            db      'Usage: sys filename',10,13,0
            sep     sret                ; and return to os
 
@@ -75,7 +75,7 @@ opened:    push    rd                  ; save file descriptor
            dw      o_read
            lbnf    success             ; jump if read was good
            sep     scall               ; indicate error
-           dw      f_inmsg
+           dw      o_inmsg
            db      'Error reading kernel file',10,13,0
            pop     rd
            lbr     o_wrmboot           ; return to OS
@@ -107,15 +107,15 @@ bootrd:    glo     r7                  ; save R7
            lbnz    bootrd              ; jump if not
 
            sep     scall               ; display completion message
-           dw      f_inmsg
+           dw      o_inmsg
            db      'Kernel updated, press any key to reboot system',0
            sep     scall               ; read a key
-           dw      f_read
+           dw      o_read
            ldi     0ch                 ; clear screen
            sep     scall
-           dw      f_type
+           dw      o_type
            sep     scall               ; Booting message
-           dw      f_inmsg
+           dw      o_inmsg
            db      'Booting system...',10,13,0
            lbr     0ff00h              ; jump to system cold boot
 
