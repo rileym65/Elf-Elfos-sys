@@ -9,6 +9,8 @@
 include    bios.inc
 include    kernel.inc
 
+d_idewrite: equ    044ah
+
            org     8000h
            lbr     0ff00h
            db      'sys',0
@@ -97,7 +99,7 @@ bootrd:    glo     r7                  ; save R7
            ldi     0e0h
            phi     r8
            sep     scall               ; call bios to read sector
-           dw      f_idewrite
+           dw      d_idewrite
            irx                         ; recover R7
            ldxa
            plo     r7
