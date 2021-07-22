@@ -6,8 +6,8 @@
 ; *** without express written permission from the author.         ***
 ; *******************************************************************
 
-include    bios.inc
-include    kernel.inc
+include    ../bios.inc
+include    ../kernel.inc
 
 d_idewrite: equ    044ah
 
@@ -113,12 +113,9 @@ bootrd:    glo     r7                  ; save R7
            db      'Kernel updated, press any key to reboot system',0
            sep     scall               ; read a key
            dw      o_read
-           ldi     0ch                 ; clear screen
-           sep     scall
-           dw      o_type
            sep     scall               ; Booting message
            dw      o_inmsg
-           db      'Booting system...',10,13,0
+           db      27,'[2JBooting system...',10,13,0
            lbr     0ff00h              ; jump to system cold boot
 
 
